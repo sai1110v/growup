@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grow Up – Portfolio</title>
+  <meta name="description" content="Grow Up Company portfolio website." />
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #121821;
+      --muted: #a6b0bf;
+      --text: #e8eef7;
+      --accent: #5dd0ff;
+      --accent-2: #9dff8a;
+      --border: #1e2632;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -10%, #0f1722 0%, var(--bg) 55%),
+                  radial-gradient(1000px 700px at -10% 110%, #0f1722 0%, var(--bg) 60%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a { color: var(--text); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ====== NAVBAR ====== */
+    .nav {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(10,14,20,.85), rgba(10,14,20,.6));
+      border-bottom: 1px solid var(--border);
+    }
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; gap: 10px; align-items: center; }
+    .logo {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: conic-gradient(from 210deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 4px rgba(93,208,255,.15), 0 8px 16px rgba(0,0,0,.4);
+    }
+    .brand span { font-weight: 700; letter-spacing: .5px; }
+
+    .nav-links { display: flex; gap: 18px; align-items: center; }
+    .nav-links a {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid transparent;
+    }
+    .nav-links a:hover { border-color: var(--border); background: rgba(255,255,255,.03); }
+
+    /* ====== HERO ====== */
+    .hero { padding: 80px 0 40px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; }
+    .hero h1 { font-size: clamp(28px, 4vw, 46px); line-height: 1.1; margin: 0 0 14px; }
+    .hero p { color: var(--muted); margin: 0 0 24px; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn { padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); display: inline-flex; gap: 8px; align-items: center; }
+    .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #051219; border: none; font-weight: 700; }
+    .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.005));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card { padding: 14px; }
+    .hero-note {
+      font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px;
+    }
+
+    /* ====== SERVICES ====== */
+    .section { padding: 64px 0; }
+    .section h2 { font-size: clamp(22px, 3vw, 34px); margin: 0 0 14px; }
+    .section p.lead { color: var(--muted); margin: 0 0 28px; }
+
+    .grid {
+      display: grid; gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .service { padding: 18px; min-height: 160px; display: grid; align-content: start; gap: 6px; }
+    .service h3 { margin: 6px 0; font-size: 18px; }
+    .pill { display: inline-block; font-size: 12px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); }
+
+    /* ====== PORTFOLIO ====== */
+    .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
+    .work { overflow: hidden; }
+    .work img { aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); }
+
+    /* ====== 360 PRODUCT (MERGED) ====== */
+    #product-360 .video-container {
+      width: 100%;
+      max-width: 720px; /* responsive cap */
+      height: auto;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    #product-360 video { width: 100%; height: 100%; object-fit: contain; }
+    #product-360 .caption { color: var(--muted); text-align: center; margin-top: 10px; font-size: 14px; }
+
+    /* ====== CONTACT ====== */
+    .contact-card { padding: 18px; display: grid; gap: 12px; }
+    .contact-list { display: grid; gap: 10px; }
+    .contact-item { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; }
+    .contact-item code { background: rgba(255,255,255,.04); padding: 2px 6px; border-radius: 6px; }
+
+    /* ====== FOOTER ====== */
+    .footer { border-top: 1px solid var(--border); color: var(--muted); padding: 20px 0 60px; }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .grid, .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .grid, .portfolio-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ====== NAV ====== -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Grow Up home">
+        <div class="logo" aria-hidden="true"></div>
+        <span>Grow Up</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Work</a>
+        <a href="#product-360">360°</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====== HERO ====== -->
+  <main id="top" class="hero container">
+    <div class="hero-grid">
+      <div>
+        <h1>We design & build brand experiences that help you <span style="color:var(--accent-2)">grow up</span>.</h1>
+        <p>Grow Up is a creative studio crafting product visuals, websites, and campaigns. We blend strategy, design, and motion to help ambitious brands scale.</p>
+        <div class="actions">
+          <a class="btn primary" href="#contact">Start a project</a>
+          <a class="btn" href="#portfolio">See our work</a>
+        </div>
+      </div>
+      <div class="card hero-card">
+        <!-- Lightweight, decorative hero visual -->
+        <div style="border-radius:14px; border:1px solid var(--border); overflow:hidden">
+          <svg viewBox="0 0 800 500" width="100%" height="100%" role="img" aria-label="Abstract growth visualization">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#5dd0ff" offset="0"/>
+                <stop stop-color="#9dff8a" offset="1"/>
+              </linearGradient>
+            </defs>
+            <rect width="800" height="500" fill="#0a0f16"/>
+            <g opacity=".35">
+              <circle cx="90" cy="120" r="120" fill="url(#g)"/>
+              <circle cx="760" cy="420" r="140" fill="url(#g)"/>
+            </g>
+            <g>
+              <path d="M40 440 Q 120 260 220 310 T 420 250 T 640 220 T 780 140" fill="none" stroke="url(#g)" stroke-width="6"/>
+            </g>
+          </svg>
+        </div>
+        <div class="hero-note">Strategy ✦ Design ✦ Motion ✦ Web</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ====== ABOUT ====== -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2>About Grow Up</h2>
+      <p class="lead">We help products tell better stories through visuals and interactions. Our team ships fast, sweats the details, and measures results.</p>
+      <div class="grid">
+        <div class="card service">
+          <span class="pill">Approach</span>
+          <h3>Research first</h3>
+          <p>We start with clear goals, audience insight, and a sharp brief. That keeps work focused and effective.</p>
+        </div>
+        <div class="card service">
+          <span class="pill">Edge</span>
+          <h3>Design × Motion</h3>
+          <p>Static to cinematic: we bring products to life with tasteful animation and render work.</p>
+        </div>
+        <div class="card service">
+          <span class="pill">Promise</span>
+          <h3>On-time delivery</h3>
+          <p>Lean, senior team. Clear check-ins. Zero surprises.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== SERVICES ====== -->
+  <section id="services" class="section">
+    <div class="container">
+      <h2>Services</h2>
+      <p class="lead">From concept to launch, we cover the full stack of brand and product communication.</p>
+      <div class="grid">
+        <div class="card service">
+          <h3>Brand & Identity</h3>
+          <p>Logos, color systems, typography, guidelines.</p>
+        </div>
+        <div class="card service">
+          <h3>Product Renders</h3>
+          <p>Photo‑real visuals, 360° spins, and hero shots.</p>
+        </div>
+        <div class="card service">
+          <h3>Websites</h3>
+          <p>Fast, responsive sites with clean, accessible UI.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- ====== MERGED 360° BOTTLE SECTION ====== -->
+  <section id="product-360" class="section">
+    <div class="container">
+      <h2>360° Product Spin</h2>
+      <p class="lead">Here is your embedded 360° rotating bottle, aligned within the portfolio layout.</p>
+
+      <!-- Original video container merged and made responsive -->
+      <div class="video-container">
+        <video autoplay muted loop playsinline>
+          <source src="https://video.wixstatic.com/video/bfcb9b_7acc406637ce4727ad0391a8ef6b86fb/720p/mp4/file.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="caption">Autoplaying, muted, looped for seamless 360° rotation</div>
+    </div>
+  </section>
+
+  <!-- ====== CONTACT ====== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2>Contact</h2>
+      <p class="lead">Have a brief or idea? Let’s make it real.</p>
+      <div class="grid">
+        <div class="card contact-card">
+          <div class="contact-list">
+            <div class="contact-item">
+              <strong>Email</strong>
+              <a href="mailto:hello@growup.company">hello@growup.company</a>
+            </div>
+            <div class="contact-item">
+              <strong>Phone</strong>
+              <a href="tel:+919876543210">+91 98765 43210</a>
+            </div>
+            <div class="contact-item">
+              <strong>Address</strong>
+              <span>Grow Up Studio, 2nd Floor, Creative Park, Bengaluru, IN</span>
+            </div>
+          </div>
+    
+        </div>
+        <div class="card contact-card">
+          <form id="contactForm" onsubmit="return handleSubmit(event)">
+            <label>
+              <div>Name</div>
+              <input required name="name" class="input" placeholder="Your name" />
+            </label>
+            <label>
+              <div>Email</div>
+              <input required type="email" name="email" class="input" placeholder="you@example.com" />
+            </label>
+            <label>
+              <div>Message</div>
+              <textarea required name="message" class="input" rows="5" placeholder="Tell us about your project..."></textarea>
+            </label>
+            <button class="btn primary" type="submit">Send</button>
+            <div id="formNote" class="hero-note" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container" style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap">
+      <span>© <span id="year"></span> Grow Up Company</span>
+      <span>Built with vanilla HTML/CSS/JS</span>
+    </div>
+  </footer>
+
+  <script>
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple demo handler for the form (no backend)
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+      const note = document.getElementById('formNote');
+      note.textContent = `Thanks, ${data.name}! We'll reply to ${data.email}. (This is a demo; replace with your backend or mailto link.)`;
+      form.reset();
+      return false;
+    }
+  </script>
+</body>
+</html>
